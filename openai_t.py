@@ -12,23 +12,35 @@ client = OpenAI(
     api_key=token,
 )
 
-question = input("Ask me anything: ")
+print("Ask me anything, type 'exit' to leave")
 
-response = client.chat.completions.create(
-    messages=[
-        {
-            "role": "system",
-            "content": "Atsakyk į klausimus visus užduodamus lietuviškai, nepriklauso kokia kalba užduotas klausimas.",
-        },
-        {
-            "role": "user",
-            "content": question,
-        }
-    ],
-    temperature=1.0,
-    top_p=1.0,
-    model=model
-)
+while True:
+    try:
+        question = input("Ask me anything: ")
+        if question.lower() == "exit":
+            print("Exiting...")
+            break
 
-print(response.choices[0].message.content)
+        response = client.chat.completions.create(
+            messages=[
+                {
+                    "role": "system",
+                    "content": "Atsakyk į klausimus visus užduodamus lietuviškai, nepriklauso kokia kalba užduotas klausimas.",
+                },
+                {
+                    "role": "user",
+                    "content": question,
+                }
+            ],
+            temperature=1.0,
+            top_p=1.0,
+            model=model
+        )
+
+        for r in response.choices:
+            print("Atsakymas: ", r.message.content)
+
+    except Exception as e:
+        print("Error: ", e)
+        break
 
