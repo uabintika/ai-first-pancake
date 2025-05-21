@@ -3,6 +3,8 @@ from openai import OpenAI
 from dotenv import load_dotenv
 load_dotenv()
 
+from functions.print_f import print_hello
+
 token = os.getenv("AIKEY")
 endpoint = "https://models.github.ai/inference"
 model = "openai/gpt-4.1-nano"
@@ -12,7 +14,8 @@ client = OpenAI(
     api_key=token,
 )
 
-print("Ask me anything, type 'exit' to leave")
+#print("Ask me anything, type 'exit' to leave")
+print_hello()
 
 while True:
     try:
