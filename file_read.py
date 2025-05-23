@@ -21,6 +21,8 @@ def extract_pdf_text(path):
 
 document_text = extract_pdf_text(PDF_PATH)
 
+print(document_text)
+
 client = OpenAI(
     api_key=token,
     base_url=endpoint,
