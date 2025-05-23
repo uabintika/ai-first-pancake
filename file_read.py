@@ -43,12 +43,13 @@ while True:
 
     try:
         response = client.chat.completions.create(
-            model=model,
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_input},
             ],
-            temperature=0.7,
+            temperature=1,
+            model=model,
+            top_p=1
         )
 
         print("Atsakymas:", response.choices[0].message.content)
