@@ -14,8 +14,32 @@ client = OpenAI(
     api_key=token,
 )
 
+def load_history(file_path):
+    history = [
+        if not os.path.exists(file_path):
+            return history
+    ]
+
+    with open(file_path, "r", encoding="utf-8") as file:
+        for line in file:
+            if line.startswith("Klausimas:"):
+                content = line[len("Klausimas:"):].strip()
+                history.append({"role": "user", "content": content})
+            elif line.startswith("Atsakymas:"):
+                content = line[len("Atsakymas:"):].strip()
+                history.append({"role": "assistant", "content": content})
+    return history
+
 #print("Ask me anything, type 'exit' to leave")
 print_hello()
+
+history = [
+    {
+        "role": "system",
+        "content": "Atsakyk į klausimus visus užduodamus lietuviškai, nepriklauso kokia kalba užduotas klausimas.",
+    }
+]
+history += load_history("output.txt")
 
 while True:
     try:
@@ -46,4 +70,3 @@ while True:
     except Exception as e:
         print("Error: ", e)
         break
-
